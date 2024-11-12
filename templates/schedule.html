@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Calendar</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.calendar {
+    max-width: 800px; /* Maximum width of the calendar */
+    margin: auto; /* Center the calendar */
+    border-collapse: collapse; /* Merge borders */
+    background-color: #fff; /* Background color of the calendar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+.calendar td {
+    border: 2px solid #ddd; /* Set a moderate border size */
+    padding: 30px; /* Adjust padding for reasonable cell size */
+    text-align: center; /* Center the text */
+    font-size: 24px; /* Set a reasonable font size */
+}
+
+.nav {
+    text-align: center; /* Center the navigation */
+    padding: 10px 0; /* Adjust padding for nav */
+}
+
+.header {
+    display: inline-block; /* Make the header inline */
+    font-size: 24px; /* Set header font size */
+    margin: 0 20px; /* Add some margin to space it from the arrows */
+}
+
+.arrow {
+    cursor: pointer; /* Pointer on hover */
+    font-size: 24px; /* Set arrow font size */
+    margin: 0 10px; /* Add some margin for spacing */
+}
+
+.day-name {
+    font-weight: bold; /* Bold text for day names */
+    color: #555; /* Darker color for day names */
+    font-size: 24px; /* Set day name font size */
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #DFF2EB; /* Changed background color to #DFF2EB */
+    margin: 0;
+    padding: 20px;
+}
+
+.calendar {
+    max-width: 800px; /* Maximum width of the calendar */
+    margin: auto; /* Center the calendar */
+    border-collapse: collapse; /* Merge borders */
+    background-color: #B9E5E8; /* Background color of the calendar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    border-radius: 8px; /* Rounded corners for a softer look */
+}
+
+.calendar td {
+    border: 2px solid #B9E5E8; /* Use a light blue for borders */
+    padding: 30px; /* Adjust padding for reasonable cell size */
+    text-align: center; /* Center the text */
+    font-size: 24px; /* Set a reasonable font size */
+    background-color: #DFF2EB; /* Light greenish background for cells */
+    position: relative; /* Position relative for tooltip */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.calendar td:hover {
+    background-color: #B9E5E8; /* Change background on hover */
+}
+
+.event-tooltip {
+    display: none; /* Hidden by default */
+    position: absolute; /* Position relative to td */
+    background-color: #B9E5E8; /* Darker blue for tooltip */
+    color: #4A628A; /* White text for tooltip */
+    padding: 1px; /* Decreased padding for tooltip */
+    padding-right: 30px;
+    border-radius: 5px; /* Rounded corners for tooltip */
+    top: 100%; /* Position below the cell */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center tooltip */
+    z-index: 10; /* Ensure tooltip is above other elements */
+    white-space: nowrap; /* Prevent tooltip from wrapping */
+    font-size: 20px; /* Increased text size for tooltip */
+}
+
+.nav {
+    text-align: center; /* Center the navigation */
+    padding: 10px 0; /* Adjust padding for nav */
+}
+
+.header {
+    display: inline-block; /* Make the header inline */
+    font-size: 24px; /* Set header font size */
+    margin: 0 20px; /* Add some margin to space it from the arrows */
+    color: #4A628A; /* Darker blue for the header */
+}
+
+.arrow {
+    cursor: pointer; /* Pointer on hover */
+    font-size: 24px; /* Set arrow font size */
+    margin: 0 10px; /* Add some margin for spacing */
+    color: #7AB2D3; /* Lighter blue for arrows */
+}
+
+.arrow:hover {
+    color: #4A628A; /* Darker blue on hover */
+}
+
+.day-name {
+    font-weight: bold; /* Bold text for day names */
+    color: #4A628A; /* Darker color for day names */
+    font-size: 24px; /* Set day name font size */
+}
+    </style>
+  </head>
+  <body>
+    <table class="calendar">
+      <tr>
+        <td colspan="7" class="nav">
+          <span class="arrow" id="prevMonth">&#9664;</span>
+          <div class="header" id="calendarHeader">October 2023</div>
+          <span class="arrow" id="nextMonth">&#9654;</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="day-name">Sun</td>
+        <td class="day-name">Mon</td>
+        <td class="day-name">Tue</td>
+        <td class="day-name">Wed</td>
+        <td class="day-name">Thu</td>
+        <td class="day-name">Fri</td>
+        <td class="day-name">Sat</td>
+      </tr>
+      <tbody id="calendarDays"></tbody>
+    </table>
+
+    <script>
+      const calendarHeader = document.getElementById("calendarHeader");
+      const calendarDays = document.getElementById("calendarDays");
+      const prevMonth = document.getElementById("prevMonth");
+      const nextMonth = document.getElementById("nextMonth");
+
+      let currentDate = new Date();
+
+      function renderCalendar() {
+        const month = currentDate.getMonth();
+        const year = currentDate.getFullYear();
+        calendarHeader.textContent = currentDate.toLocaleString("default", {
+          month: "long",
+          year: "numeric",
+        });
+
+        // Clear previous days
+        calendarDays.innerHTML = "";
+
+        // Get the first day of the month (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+        const firstDay = new Date(year, month, 1).getDay();
+        // Get the number of days in the month
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        // Fill in empty cells for days before the first of the month
+        let row = document.createElement("tr");
+        for (let i = 0; i < firstDay; i++) {
+          const emptyCell = document.createElement("td");
+          row.appendChild(emptyCell);
+        }
+
+        // Fill in the days of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayCell = document.createElement("td");
+          dayCell.textContent = day;
+          row.appendChild(dayCell);
+
+          // Start a new row after Saturday (index 6)
+          if ((day + firstDay) % 7 === 0) {
+            calendarDays.appendChild(row);
+            row = document.createElement("tr"); // Create a new row
+          }
+        }
+
+        // Append the last row if it has any cells
+        if (row.children.length > 0) {
+          calendarDays.appendChild(row);
+        }
+      }
+
+      prevMonth.addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+      });
+
+      nextMonth.addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+      });
+
+      // Initial render
+      renderCalendar();
+    </script>
+  </body>
+</html>

@@ -79,6 +79,10 @@ def forgot_password():
             flash('Email không tồn tại!', 'danger')
     return render_template('fpassword.html')
 
+@app.route('/index')
+def index():
+    return render_template("index.html")
+
 # Hàm gửi email reset mật khẩu
 def send_reset_email(email, reset_link):
     sender_email = "your_email@example.com"
@@ -102,6 +106,11 @@ def send_reset_email(email, reset_link):
     with smtplib.SMTP_SSL("smtp.example.com", 465) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message.as_string())
+
+
+@app.route('/schedule')
+def schedule():
+    return render_template("schedule.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Calendar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <table class="calendar">
+        <tr>
+            <td colspan="7" class="nav">
+                <span class="arrow" id="prevMonth">&#9664;</span>
+                <div class="header" id="calendarHeader">October 2023</div>
+                <span class="arrow" id="nextMonth">&#9654;</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="day-name">Sun</td>
+            <td class="day-name">Mon</td>
+            <td class="day-name">Tue</td>
+            <td class="day-name">Wed</td>
+            <td class="day-name">Thu</td>
+            <td class="day-name">Fri</td>
+            <td class="day-name">Sat</td>
+        </tr>
+        <tr>
+            <td data-events="Alice Smith, Bob Johnson, Charlie Brown">1</td>
+            <td data-events="Catherine Lee, David Brown">2</td>
+            <td data-events="Eva White, Frank Green, Hannah King, Ian Wright">3</td>
+            <td data-events="Jackie Taylor, Kevin Martinez">4</td>
+            <td data-events="Laura Garcia, Michael Davis, Nina Rodriguez">5</td>
+            <td data-events="Oliver Lewis">6</td>
+            <td data-events="Patricia Young, Quinn Hernandez, Ryan Hall">7</td>
+        </tr>
+        <tr>
+            <td data-events="Sophia Allen, Thomas Scott">8</td>
+            <td data-events="Uma Clark, Victor Lewis, Wendy Walker">9</td>
+            <td data-events="Xander Hall, Yara Adams">10</td>
+            <td data-events="Zoe Nelson, Aaron Carter, Bella Mitchell">11</td>
+            <td data-events="Chris Perez, Diana Rivera">12</td>
+            <td data-events="Ethan Cooper, Fiona Kim, George Thompson">13</td>
+            <td data-events="Hannah Lee, Isaac Martinez">14</td>
+        </tr>
+        <tr>
+            <td data-events="Julia Chen, Kevin Brown, Lily White">15</td>
+            <td data-events="Mason Harris, Nora James, Oliver Smith">16</td>
+            <td data-events="Paula Green, Quinn Taylor">17</td>
+            <td data-events="Ryan Davis, Sophia Clark, Thomas Johnson">18</td>
+            <td data-events="Uma Rodriguez, Victor Adams">19</td>
+            <td data-events="Wendy Lee, Xander Kim, Yara Thompson">20</td>
+            <td data-events="Zoe Martinez, Aaron White, Bella Johnson">21</td>
+        </tr>
+        <tr>
+            <td data-events="Chris Garcia, Diana Wilson, Ethan Brown">22</td>
+            <td data-events="Fiona Lee, George Smith, Hannah Adams">23</td>
+            <td data-events="Isaac Johnson, Julia White">24</td>
+            <td data-events="Kathy Green, Liam Thompson, Mia Carter">25</td>
+            <td data-events="Nina Rodriguez, Oliver Lewis">26</td>
+            <td data-events="Paula Young, Quinn Hernandez, Ryan Hall">27</td>
+            <td data-events="Sophia Allen, Thomas Scott">28</td>
+        </tr>
+        <tr>
+            <td data-events="Uma Clark, Victor Lewis">29</td>
+            <td data-events="Wendy Walker, Xander Hall, Yara Adams">30</td>
+            <td data-events="Zoe Nelson, Aaron Carter">31</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <div class="event-tooltip" id="eventTooltip"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
