@@ -8,21 +8,21 @@ from email.mime.multipart import MIMEMultipart
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-# Cấu hình kết nối MySQL
+# MySQL Configuration
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'password'
+app.config['MYSQL_PASSWORD'] = 'Quochung@0904'
 app.config['MYSQL_DB'] = 'mydatabase'
 
-# Khởi tạo MySQL
+# Initialize MySQL
 mysql = MySQL(app)
 
-# Route trang chính
+# Main route
 @app.route('/')
 def home():
-    return redirect(url_for('login'))  # Redirect đến trang đăng nhập
+    return redirect(url_for('login'))  # Redirect to login page
 
-# Route đăng nhập
+# Login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -34,13 +34,13 @@ def login():
         account = cursor.fetchone()
 
         if account:
-            flash('Đăng nhập thành công!', 'success')
-            return redirect(url_for('dashboard'))  # Điều hướng đến trang dashboard
+            flash('Login successful!', 'success')
+            return redirect(url_for('dashboard'))  # Redirect to dashboard
         else:
-            flash('Tên người dùng hoặc mật khẩu không chính xác!', 'danger')
+            flash('Incorrect username or password!', 'danger')
     return render_template('login.html')
 
-# Route đăng ký
+# Register route
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -53,15 +53,15 @@ def register():
         account = cursor.fetchone()
 
         if account:
-            flash('Tên người dùng đã tồn tại!', 'danger')
+            flash('Username already exists!', 'danger')
         else:
             cursor.execute('INSERT INTO users (username, password, email) VALUES (%s, %s, %s)', (username, password, email))
             mysql.connection.commit()
-            flash('Đăng ký thành công!', 'success')
+            flash('Registration successful!', 'success')
             return redirect(url_for('login'))
     return render_template('register.html')
 
-# Route quên mật khẩu
+# Forgot password route
 @app.route('/forgot_password', methods=['GET', 'POST'])
 def forgot_password():
     if request.method == 'POST':
@@ -74,16 +74,16 @@ def forgot_password():
         if account:
             reset_link = url_for('reset_password', email=email, _external=True)
             send_reset_email(email, reset_link)
-            flash('Link reset mật khẩu đã được gửi đến email của bạn!', 'success')
+            flash('Password reset link has been sent to your email!', 'success')
         else:
-            flash('Email không tồn tại!', 'danger')
+            flash('Email does not exist!', 'danger')
     return render_template('fpassword.html')
 
 @app.route('/index')
 def index():
     return render_template("index.html")
 
-# Hàm gửi email reset mật khẩu
+# Function to send password reset email
 def send_reset_email(email, reset_link):
     sender_email = "your_email@example.com"
     receiver_email = email
@@ -106,7 +106,6 @@ def send_reset_email(email, reset_link):
     with smtplib.SMTP_SSL("smtp.example.com", 465) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message.as_string())
-
 
 @app.route('/schedule')
 def schedule():
